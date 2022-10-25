@@ -1,42 +1,38 @@
 '''
-SHUFFLE GAME SCRIPT
+SHUFFLE_GAME_SCRIPT
 '''
+from random import shuffle
 ### Ask the player if he wants to start the game ###
 def ask_to_start():
-    
-    q = True
-    while q == True:
+    q_1 = True
+    while q_1:
         answer = input('Do you want to start the game? (YES or NO): ')
         if answer == 'NO':
             print('Thank you for playing!')
-            q == False
-            return False
+            q_1 = False
         elif answer == 'YES':
-            q == True
-            return True
+            break
         else:
             print("\nINVALID, please type 'YES' or 'NO'")
-    
-### Gamelist Shuffler ###    
-from random import shuffle
+    return q_1
 
+### Gamelist Shuffler ###
 def shuffle_gamelist(game):
     shuffle(game)
     return game
 
 ### Ask the player his guess ###
 def player_guess():
-    
     guess = ''
-    
     while guess not in ['0', '1', '2']:
-        guess = input('Select your position: (0, 1 ,2): ' )
+        guess = input('Select your position: (0, 1 ,2): ')
     return int(guess)
 
 ### Check if guess was correct ###
 def check_guess(gamelist,guess):
     if gamelist[guess] == '0':
         print('Correct!')
+        print(gamelist)
     else:
         print('Wrong Guess!')
         print(gamelist)
@@ -44,46 +40,42 @@ def check_guess(gamelist,guess):
 
 ### Ask the player if he wants to play again ###
 def play_again():
-    
-    q = True 
-    
-    while q == True:
+    q_2 = True 
+
+    while q_2:
         answer = input("Do you want to play again? 'YES' or 'NO': ")
-        
-        if answer == 'YES':
-            q = False
-            return True
-        elif answer == 'NO':
-            q = False 
-            return False
+
+        if answer == 'NO':
+            q_2 = False
+            print("Thank you for playing Shuffle Game!")
+        elif answer == 'YES':
+            q_2 = True
+            break
         else:
             print("INVALID, please type 'YES' or 'NO'")
+    return q_2
 
 #### GAMEPLAY LOGIC ####
 print('WELCOME TO SHUFFLE GAME!')
-system = True
+SYSTEM = True
 
-while system == True:
-    start = ask_to_start()
+while SYSTEM:
+    START = ask_to_start()
 
-    if start == False:
-        system = False
-        break
+    if START:
+        GAMELIST = [' ','0',' ']
 
-    elif start == True:
-        gamelist = [' ','0',' ']
-
-        shuffled_list = shuffle_gamelist(gamelist)
+        shuffled_list = shuffle_gamelist(GAMELIST)
         shuffled_list
-        
-        user_guess = player_guess()
-        check_guess(gamelist,user_guess)
 
-        question = play_again()
-        if question == True:
-            system = True
+        USER_GUESS = player_guess()
+        check_guess(GAMELIST,USER_GUESS)
+
+        QUESTION = play_again()
+        if not QUESTION:
+            SYSTEM = False
+        else:
             continue
-        elif question == False:
-            print("Thank you for playing Shuffle Game!")
-            system = False
-            break
+
+    else:
+        SYSTEM = False
